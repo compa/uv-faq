@@ -1,0 +1,36 @@
+	body {
+		  padding-top: 50px;
+
+		}
+		.starter-template {
+			width: 800px;
+		  padding: 40px 15px;
+		  border: 1px solid #333;
+		  margin:12px auto 0 auto;
+		  border: 1px solid rgba(0,0,0,.1);
+		  border-radius: 6px;
+		  text-align: center;
+		}
+    .form-horizontal{
+        
+        width: 500px;
+        margin:1px auto;
+        text-align: center;
+    }
+		.navbar-inverse{
+			background-color: #3DB1B1;
+			color:white;
+			border-color: white;
+		}
+		.navbar-brand{
+			color: white;
+		}
+		.navbar-inverse 
+		.navbar-brand {
+			color: white;
+
+		}
+    .form-wrapper{
+      width: 600px;
+    }
+    
