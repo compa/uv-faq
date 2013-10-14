@@ -1,4 +1,4 @@
-<?
+<?php
 function getEst($g){
     $sas = "";    
     $pepe = [];

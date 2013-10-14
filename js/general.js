@@ -186,10 +186,10 @@ FQA.prototype.check = function(){
                     $("#msgerror").css("display", "block");
                     return false;
                 }
-                return true;
             }
         }
     }
+    return true;
 };
 
 FQA.prototype.set = function(){

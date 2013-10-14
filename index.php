@@ -1,12 +1,12 @@
 
-<? session_start(); ?>
-<? require_once "connection.php"; ?>
-<? require_once "models.php"; ?>
-<? require_once "general.php"; ?>
+<?php session_start(); ?>
+<?php require_once "connection.php"; ?>
+<?php require_once "models.php"; ?>
+<?php require_once "general.php"; ?>
 
-<? if(isset($_GET["destroy"])){ session_destroy(); } ?>
-<? if(isset($_GET["init"])){ $_SESSION["user"] = true; } ?>
-<? if(isset($_POST["json"])){ save($_POST["json"], $DB); } ?>
+<?php if(isset($_GET["destroy"])){ session_destroy(); } ?>
+<?php if(isset($_GET["init"])){ $_SESSION["user"] = true; } ?>
+<?php if(isset($_POST["json"])){ save($_POST["json"], $DB); } ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,8 +16,8 @@
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <script type="text/javascript" src="/js/jsapi.js"></script>
     <script type="text/javascript" src="/js/general.js"></script>
-    <? $datos = new Experiencias_Preguntas($DB); ?>
-    <? $preguntas = $datos->getPreguntas(); ?>
+    <?php $datos = new Experiencias_Preguntas($DB); ?>
+    <?php $preguntas = $datos->getPreguntas(); ?>
     <script type="text/javascript">
     <?= makeObject($preguntas, $DB); ?>
     </script>
@@ -51,18 +51,18 @@
         <div class="clearfix"></div>
         <p>Programa Entre Pares</p>
         <hr>
-        <? if(isset($_POST["all_exp"]) or isset($_SESSION["gMaterias"])): ?>
-            <? if(isset($_POST["all_exp"])) { $_SESSION["gMaterias"] = $_POST["all_exp"]; } ?>
+        <?php if(isset($_POST["all_exp"]) or isset($_SESSION["gMaterias"])): ?>
+            <?php if(isset($_POST["all_exp"])) { $_SESSION["gMaterias"] = $_POST["all_exp"]; } ?>
             <script type="text/javascript">
-              <? $claves = explode("|", $_SESSION["gMaterias"]); ?>
+              <?php $claves = explode("|", $_SESSION["gMaterias"]); ?>
                 var gMaterias = [
-                    <? for($i=0;$i<count($claves);$i++): ?>
-                        <? if($i === (count($claves) - 1)): ?>
+                    <?php for($i=0;$i<count($claves);$i++): ?>
+                        <?php if($i === (count($claves) - 1)): ?>
                             <?= "'". urldecode($claves[$i]) ."'"; ?>
-                        <? else: ?>
+                        <?php else: ?>
                             <?= "'". urldecode($claves[$i]) ."',"; ?>
-                        <? endif; ?>
-                    <? endfor; ?>
+                        <?php endif; ?>
+                    <?php endfor; ?>
                 ];
             </script>
             <div id="main-ask" class="well">
@@ -78,8 +78,8 @@
                 var mov = new FQA();
               </script>
             </div>
-        <? else: ?>
-          <?  if(!isset($_SESSION["user"])):  ?>
+        <?php else: ?>
+          <?php  if(!isset($_SESSION["user"])):  ?>
           <p class="well">
           	¿Deseas Realizar la Encuesta?
           </p>
@@ -89,32 +89,32 @@
           <p >
           	<a href="http://www.uv.mx" class="btn btn-danger" style="width:300px;">No (regresar a la Pagina Principal)</a>
           </p>
-          <? else: ?>
+          <?php else: ?>
           	 <p class="well">
               Selecciona las Experiencias Educativas que Cursas este Semestre
             </p>
             <form class="form-horizontal" role="form" method="POST" action="/">
               <div id="msgerror" class="alert alert-danger" style="display:none;"></div>
-              <? $exp = new Experiencias($DB); ?>
-              <? $materias =  $exp->getExperiencies(); ?>
-              <? for($i=1; $i<7; $i++): ?>
+              <?php $exp = new Experiencias($DB); ?>
+              <?php $materias =  $exp->getExperiencies(); ?>
+              <?php for($i=1; $i<7; $i++): ?>
               <div class="form-group">
                 <label class="col-lg-3 control-label">Experiencia <?= $i ?></label>
                 <div class="col-lg-6">
                   <select id="<?= 'exp'. $i ?>" class="form-control" >
                     <option></option>
-                    <? foreach ($materias as $pepe => $value): ?>
+                    <?php foreach ($materias as $pepe => $value): ?>
                       <option  value="<?= str_replace(" ", "_", utf8_encode($value)); ?>"> <?= utf8_encode($value) ?></option>
-                    <? endforeach; ?>
+                    <?php endforeach; ?>
                   </select>
                 </div>
               </div>
-              <? endfor; ?>
+              <?php endfor; ?>
               <input id="all_exp" name="all_exp" type="hidden" >
               <input type="submit" class="btn btn-success" value="Continuar" >
             </form>
-          <? endif; ?>
-        <? endif; ?>
+          <?php endif; ?>
+        <?php endif; ?>
       </div>
     </div>
     <input type="hidden" id="std">
