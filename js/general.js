@@ -39,9 +39,6 @@ $(document).ready(function(){
         mov.siguiente();
     });
 
-
-    
-
 });
 
 
@@ -91,7 +88,7 @@ var make_lis = function(){
 
                 break;
         }
-        $("#main-graphics-graph").html("<iframe style='border:0;width:740px; height:600px;' src='/algo.php?data="+ r +"'></iframe>");
+        $("#main-graphics-graph").html("<iframe style='border:0;width:740px; height:600px;' src='/Entre_Pares/algo.php?data="+ r +"'></iframe>");
     });
 
 };
@@ -118,7 +115,7 @@ FQA.prototype.siguiente = function() {
         if(!this.check()) return false;
         this.prepare();
         var request = $.ajax({
-            url: "/",
+            url: "/Entre_Pares/",
             type: "POST",
             data: { 'json' : __ }
         });

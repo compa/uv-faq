@@ -1,6 +1,6 @@
 <html>
   <head>
-    <script type="text/javascript" src="js/jsapi.js"></script>
+    <script type="text/javascript" src="/Entre_Pares/js/jsapi.js"></script>
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
