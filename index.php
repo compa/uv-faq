@@ -46,7 +46,7 @@
     <div class="container">
       <div class="starter-template">
         <h3>Universidad Veracruzana</h3>
-        <h4>Facultad de Sistemas</h4>
+        <h4>Facultad de Contaduría y Administración</h4>
         <div class="clearfix"></div>
         <p>Programa Entre Pares</p>
         <hr>
@@ -96,7 +96,7 @@
               <div id="msgerror" class="alert alert-danger" style="display:none;"></div>
               <?php $exp = new Experiencias($DB); ?>
               <?php $materias =  $exp->getExperiencies(); ?>
-              <?php for($i=1; $i<7; $i++): ?>
+              <?php for($i=1; $i<9; $i++): ?>
               <div class="form-group">
                 <label class="col-lg-3 control-label">Experiencia <?= $i ?></label>
                 <div class="col-lg-6">

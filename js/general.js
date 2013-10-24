@@ -8,13 +8,15 @@ $(document).ready(function(){
            $('#exp3').val() === '' &&
            $('#exp4').val() === '' &&
            $('#exp5').val() === '' &&
-           $('#exp6').val() === ''){
+           $('#exp6').val() === '' &&
+           $('#exp7').val() === '' && 
+           $('#exp8').val() === '' ){
             $("#msgerror").html("Tienes que Seleccionar al menos una Experiencia");
             $("#msgerror").css("display", "block");
             event.preventDefault();
         } else {
             var materias = [];
-            for(var i = 1; i<7; i++)
+            for(var i = 1; i<9; i++)
             {
                 var mat = $("#exp"+i).val();
                 if( mat !== ''){
