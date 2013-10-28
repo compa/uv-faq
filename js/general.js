@@ -181,7 +181,7 @@ FQA.prototype.partial_check = function(){
             for (var j=0;j<gMaterias.length;j++){
                 if(!chk[gMaterias[j]]){
                     for(var x in _[6].answers){
-                        if(gMaterias[j] != x){
+                        if(gMaterias[j] == x.split(' ').join('_')){
                             $("#msgerror").html("Tienes que escoger todas las opciones");
                             $("#msgerror").css("display", "block");
                             return false;
