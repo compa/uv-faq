@@ -43,21 +43,20 @@ $(document).ready(function(){
 
 });
 
-
 var make_url = function(num, res_f){
-        for(var i=0;i<res_f.length; i++)
-        {
-            var ped = res_f[i].split("^");
-            var url = ped[1];
-            if(ped[0] == num){
-                if(url[url.length-1] == ";"){
-                    return url.slice(0, -1);
-                } else {
-                    return url;
-                }
-            };
+    for(var i=0;i<res_f.length; i++)
+    {
+        var ped = res_f[i].split("^");
+        var url = ped[1];
+        if(ped[0] == num){
+            if(url[url.length-1] == ";"){
+                return url.slice(0, -1);
+            } else {
+                return url;
+            }
         };
     };
+};
 
 var make_lis = function(){
     $("button").on("click", function(){
@@ -91,8 +90,8 @@ var make_lis = function(){
                 break;
         }
         $("#main-graphics-graph").html("<iframe style='border:0;width:740px; height:600px;' src='/Entre_Pares/algo.php?data="+ r +"'></iframe>");
-    });
 
+    });
 };
 
 var FQA = function(){
@@ -104,8 +103,9 @@ var FQA = function(){
 
 FQA.prototype.siguiente = function() {
     this.save();
+    if(!this.partial_check()){ return false; };
     if(this.number < 7){
-        $("#msgerror").css("display", "none");
+        $("#msgerror").css("didisplaysplay", "none");
         this.number = this.number + 1 ;
         this.render();
         this.set();
@@ -114,7 +114,7 @@ FQA.prototype.siguiente = function() {
             $("#siguiente").text("Finalizar");
         }
     } else {
-        if(!this.check()) return false;
+        //if(!this.check()) return false;
         this.prepare();
         var request = $.ajax({
             url: "/Entre_Pares/",
@@ -128,26 +128,15 @@ FQA.prototype.siguiente = function() {
             {
                 $("#main-ask").html("Algo Malo Sucedio. Por favor, Intentalo de Nuevo");
             } else {
-                $("#main-ask").html("<div id='main-graphics' style='width:100%;height:100%;display:inline;'>"+
-                                        "<button value='graph1' class='btn btn-warning' style='display:inline-block;'>Pregunta 1</button>"+
-                                        "<button value='graph2' class='btn btn-warning' style='display:inline-block;'>Pregunta 2</button>"+
-                                        "<button value='graph3' class='btn btn-warning' style='display:inline-block;'>Pregunta 3</button>"+
-                                        "<button value='graph4' class='btn btn-warning' style='display:inline-block;'>Pregunta 4</button>"+
-                                        "<button value='graph5' class='btn btn-warning' style='display:inline-block;'>Pregunta 5</button>"+
-                                        "<button value='graph6' class='btn btn-warning' style='display:inline-block;'>Pregunta 6</button>"+
-                                        "<button value='graph7' class='btn btn-warning' style='display:inline-block;'>Pregunta 7</button>"+
-                                        "</div><div id='main-graphics-graph'  style='width:100%;height:100%;display:inline;'></div>"+
-                                        "<script>make_lis();</script>");
-
-                
+                $("#main-ask").html("<h2>Gracias!</h2>");                
             }
-
         });
-    };  
+    };
 };
 
 FQA.prototype.anterior = function() {
     this.save();
+    if(!this.partial_check()){ return false; };
     if(this.number > 1){
         $("#msgerror").css("display", "none");
         $("#siguiente").text("Siguiente");
@@ -157,6 +146,8 @@ FQA.prototype.anterior = function() {
         this.set();
     }
 };
+
+
 
 FQA.prototype.prepare = function(){
     var bck = [];
@@ -172,6 +163,36 @@ FQA.prototype.prepare = function(){
         }
         __[i].answers.push(json);
     }
+};
+
+FQA.prototype.partial_check = function(){
+    var i = this.number;
+    if(_[i].type != "CB-E" ){
+        chk  = _[i].answers;
+        if(i !== 7){
+            for (var j=0;j<gMaterias.length;j++){
+                if(!chk[gMaterias[j]]){
+                    $("#msgerror").html("Tienes que escoger todas las opciones");
+                    $("#msgerror").css("display", "block");
+                    return false;
+                }
+            }
+        }else{
+            for (var j=0;j<gMaterias.length;j++){
+                if(!chk[gMaterias[j]]){
+                    for(var x in _[6].answers){
+                        if(gMaterias[j] != x){
+                            $("#msgerror").html("Tienes que escoger todas las opciones");
+                            $("#msgerror").css("display", "block");
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    $("#msgerror").css("display", "none");
+    return true;
 };
 
 FQA.prototype.check = function(){
@@ -234,7 +255,7 @@ FQA.prototype.render = function() {
     this.chunkHtml += "<hr>";
     /* bueno regular malo */
     if(_[this.number].type == "CB-E"){
-        this.chunkHtml += "<div class='panel panel-success' style='width:300px;margin:10px auto;display:inline-block;'>";
+        this.chunkHtml += "<class='panel panel-success' style='width:300px;margin:10px auto;display:inline-block;'>";
         this.chunkHtml += "<div class='panel-heading'>";
         this.chunkHtml += "<h3 class='panel-title'>Experiencias</h3>"
         this.chunkHtml += "</div>";
@@ -242,26 +263,43 @@ FQA.prototype.render = function() {
         this.chunkHtml += "<table  class='table table-striped' style='width:200px;margin:0 auto;'>";
         for(var i=0;i<gMaterias.length;i++)
         {
+            
             this.chunkHtml +="<tr><td><input type='checkbox' class='CBMAT' value='"+ gMaterias[i].split('_').join(' ') +"'></td><td>"+ gMaterias[i].split('_').join(' ') +"</td></tr>";
+              
         } 
         this.chunkHtml +="</table>";
         this.chunkHtml +="</div>";
         this.chunkHtml +="</div>";
     } else {
-        for (var i=0; i<gMaterias.length; i++){
-            this.chunkHtml += "<div class='panel panel-success' style='width:300px;margin:10px 10px;display:inline-block;'>";
-            this.chunkHtml += "<div class='panel-heading'>";
-            this.chunkHtml += "<h3 class='panel-title'>"+ gMaterias[i].split('_').join(' ')+"</h3>"
-            this.chunkHtml +="</div>";
-            this.chunkHtml +="<div class='panel-body'>";
-            this.chunkHtml +="<table  class='table table-striped' style='width:200px;margin:0 auto;'>";
-            for(var k=0;k<_[this.number].options.length;k++){
-                this.chunkHtml +="<tr><td><input type='radio' name='"+ this.number+"_"+ gMaterias[i] +"' value='"+ _[this.number].options[k].split(' ').join('_')+"'></td><td>"+ _[this.number].options[k] + "</td></tr>";
-            }
-            this.chunkHtml +="</table>";
-            this.chunkHtml +="</div>";
-            this.chunkHtml +="</div>";
+        this.chunkHtml += "<table class='table table-hover'><thead><tr><th syle='text-align:center;'>Materia</th>";
+        for(var k=0;k<_[this.number].options.length;k++){
+            this.chunkHtml +="<td>" + _[this.number].options[k]+"</td>";
         }
+        for (var i=0; i<gMaterias.length; i++){
+            var flag = true;
+            this.chunkHtml += "</tr></thead>";
+            this.chunkHtml += "<tbody>";
+            if(this.number !== 7 ){ this.chunkHtml += "<tr><td>"+ gMaterias[i].split('_').join(' ')+"</td>"; }
+            for(var q=0;q<_[this.number].options.length;q++){
+                if (this.number === 7){
+                    for(var x in _[6].answers) { 
+                        if (x == gMaterias[i].split('_').join(' ')){
+                            if(flag){
+                                this.chunkHtml += "<tr><td>"+ gMaterias[i].split('_').join(' ')+"</td>"; 
+                                flag = false;
+                            }
+                            this.chunkHtml +="<td><input type='radio' name='"+ this.number+"_"+ gMaterias[i] +"' value='"+ _[this.number].options[q].split(' ').join('_')+"'></td>";          
+                        }
+                    }
+                } 
+                else 
+                {
+                    this.chunkHtml +="<td><input type='radio' name='"+ this.number+"_"+ gMaterias[i] +"' value='"+ _[this.number].options[q].split(' ').join('_')+"'></td>";
+                }
+            }    
+            this.chunkHtml += "</tr>";
+        }
+        this.chunkHtml += "</tbody></table>"; 
     }
     $("#pregunta").html(this.chunkHtml);
 };

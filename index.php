@@ -33,7 +33,7 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <img src="<?= SUBPATH; ?>/img/uv.png" style="height:50px;width:50px;float:left;">
+          <img src="<?= SUBPATH; ?>/img/uv.png" style="height:50px;width:40px;float:left;">
           <a class="navbar-brand" href="#">Universidad Veracruzana</a>
         </div>
         <div class="collapse navbar-collapse" style="float:right;background-color:#463265;">

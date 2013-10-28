@@ -5,8 +5,7 @@ function getEst($g){
     foreach ($g as $key => $value) {
         $sas .= $key . "^";
         foreach ($value as $keyGC => $valueGC) {
-            $sas .= $keyGC . "|". $valueGC .";";
-            
+            $sas .= $keyGC . "|". $valueGC .";"; 
         }
         $sas .= "~";
     }
@@ -35,17 +34,6 @@ function save($json , $DB){
             	}
         	}
     	}
-    	$info = $ConEA->getApoyos();
-    	$pepe = [];
-    	foreach($info as $indice => $valor)
-    	{
-      		$pepe[] = $indice."|".$valor;
-    	}
-    	$g= $ConBA->getCalificaciones();
-
-    	print_r(utf8_encode(implode(";", $pepe)));
-    	print_r("#");
-    	print_r(getEst($g));
     	session_destroy();
     	die();
     } 
@@ -53,6 +41,21 @@ function save($json , $DB){
     {
       echo 'Something is wrong';
   	}
+
+}
+function getEstadisticas ($DB)
+{
+    $ConBA = new Experiencias_Calificaciones($DB);
+    $ConEA = new Experiencias_Apoyos($DB);
+
+    $info = $ConEA->getApoyos();
+    $pepe = [];
+    foreach($info as $indice => $valor)
+    {
+        $pepe[] = $indice."|".$valor;
+    }
+    $g= $ConBA->getCalificaciones();
+    return utf8_encode(implode(";", $pepe)) . "#" . getEst($g); 
 
 }
 
